@@ -1,0 +1,96 @@
+import re  
+contacts = {}
+def display_contacts():
+    if not contacts:
+        print("No Contacts Available")
+    else:
+        print("Contact Details:")
+        for name, details in contacts.items():
+            print(f"Name: {name}")
+            print(f"Details: {details}")
+            print()
+
+def is_valid_email(email):
+    pattern = r'^[\w\.-]+@[a-zA-Z\d-]+\.[a-zA-Z]{2,}$'
+    return re.match(pattern, email) is not None
+
+def add_contact(name, email, phone):
+    if is_valid_email(email):
+        if len(phone) == 10 and phone.isdigit():
+            contacts[name] = {
+                'Email': email,
+                'Phone': phone
+            }
+            print(f"Contact '{name}' added.")
+        else:
+            print("Phone number contains 10 digits")
+    else:
+        print("Invalid email format")
+
+def search_contact(name):
+    if name in contacts:
+        print(f"Name: {name}")
+        print(f"Details: {contacts[name]}")
+    else:
+        print(f"Contact '{name}' not found.")
+
+def update_contact(name, new_email, new_phone):
+    if name in contacts:
+        if is_valid_email(new_email):
+            if len(new_phone) == 10 and new_phone.isdigit():
+                contacts[name]['Email'] = new_email
+                contacts[name]['Phone'] = new_phone
+                print(f"Contact '{name}' updated.")
+            else:
+                print("New phone number contains 10 digits.")
+        else:
+            print("Invalid new email format")
+    else:
+        print(f"Contact '{name}' not found.")
+
+def delete_contact(name):
+    if name in contacts:
+        del contacts[name]
+        print(f"Contact '{name}' deleted.")
+    else:
+        print(f"Contact '{name}' not found.")
+
+# Main program loop
+def main():
+    while True:
+        print("\nOptions:")
+        print("1. Display all contacts")
+        print("2. Add a contact")
+        print("3. Search for a contact")
+        print("4. Update a contact")
+        print("5. Delete a contact")
+        print("6. Exit")
+        
+        choice = input("Enter your choice (1-6): ")
+        
+        if choice == '1':
+            display_contacts()
+        elif choice == '2':
+            name = input("Enter contact name: ")
+            email = input("Enter email address: ")
+            phone = input("Enter phone number: ")
+            add_contact(name, email, phone)
+        elif choice == '3':
+            name = input("Enter contact name to search: ")
+            search_contact(name)
+        elif choice == '4':
+            name = input("Enter contact name to update: ")
+            new_email = input("Enter new email: ")
+            new_phone = input("Enter new phone number: ")
+            update_contact(name, new_email, new_phone)
+        elif choice == '5':
+            name = input("Enter contact name to delete: ")
+            delete_contact(name)
+        elif choice == '6':
+            print("Closing Contacts")
+            break
+        else:
+            print("Invalid input")
+
+if __name__ == "__main__":
+    main()
