@@ -1,0 +1,59 @@
+tasks = []
+
+def display_tasks():
+    if not tasks:
+        print("No tasks in  to-do list.")
+    else:
+        print("To-Do List:")
+        for index, task in enumerate(tasks, start=1):
+            print(f"{index}. {task}")
+
+def add_task(task):
+    tasks.append(task)
+    print(f"Task '{task}' added to the to-do list.")
+
+def delete_task(task_index):
+    if 1 <= task_index <= len(tasks):
+        deleted_task = tasks.pop(task_index - 1)
+        print(f"Task '{deleted_task}' deleted from the to-do list.")
+    else:
+        print("Invalid task number")
+
+def update_task(task_index, new_task):
+    if 1 <= task_index <= len(tasks):
+        tasks[task_index - 1] = new_task
+        print(f"Task '{new_task}' updated.")
+    else:
+        print("Invalid task number")
+
+def main():
+    while True:
+        print("\n1. Display to-do list")
+        print("2. Add a task")
+        print("3. Update a task")
+        print("4. Delete a task")
+        print("5. Exit")
+        
+        choice = input("Enter your choice for To-do list: ")
+        
+        if choice == '1':
+            display_tasks()
+        elif choice == '2':
+            task = input("Task to do: ")
+            add_task(task)
+        elif choice == '3':
+            task_index = int(input("Task to update: "))
+            new_task = input("Enter new task: ")
+            update_task(task_index, new_task)
+        elif choice == '4':
+            task_index = int(input("Task to delete: "))
+            delete_task(task_index)
+        elif choice == '5':
+            print("Exiting the program.")
+            break
+        else:
+            print("Invalid choice. Please enter a number from 1 to 5.")
+
+# Run the program
+if __name__ == "__main__":
+    main()
